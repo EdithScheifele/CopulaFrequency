@@ -1,0 +1,178 @@
+---
+title: "Frequency of *sein* and *werden* as copulas"
+author: "Edith Scheifele"
+date: "Jan 13, 2021"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    number_sections: yes
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+```
+
+date of query: Jan 13, 2021
+
+*sein*
+sein WITH $p=VAFIN
+
+https://www.dwds.de/r/?q=sein+WITH+%24p%3DVAFIN&corpus=korpus21&date-start=2000&date-end=2010&genre=Belletristik&genre=Wissenschaft&genre=Gebrauchsliteratur&genre=Zeitung&format=max&sort=random&limit=10&p=1
+
+dwds_export_2021-01-13_15 37 07.csv
+
+*werden*:
+werden WITH $p=VAFIN
+
+https://www.dwds.de/r/?q=werden+WITH+%24p%3DVAFIN&corpus=korpus21&date-start=2000&date-end=2010&genre=Belletristik&genre=Wissenschaft&genre=Gebrauchsliteratur&genre=Zeitung&format=max&sort=random&limit=10
+
+dwds_export_2021-01-13_15 43 34.csv
+
+
+$p=VAFIN: STTS-Tag für finite Auxiliare
+
+# Frequency of copula *sein* and *werden* 
+
+## Fragestellung - Kurzbeschreibung
+
+Wir untersuchen in dieser Korpus-Studie die Verwendungsweisen von Adjektiven. Dabei unterscheiden wir zwischen *attributiv*, *adverbial* und *prädikativ* verwendeten Adjektiven.
+
+Insgesamt wollen wir 400 Hits anntotieren, wofür wir 550 Belege aus dem ZEIT-Korpus (1946-2018) (Plattform: DWDS) extrahieren.
+
+**Fragestellung**: 
+
+- Prosa: Wir suchen nach zufälligen Adjektiven (ADJA und ADJD).
+- DWDS-Abfrage: "$p=ADJ*"
+
+## Anfrage ans Korpus und Export
+
+Suchmasken-Einstellung:
+
+- Sortierung: zufällig
+- Anzeige: maximal
+- Start und Ende: 1999 bis 2018
+
+Export-Einstellung:
+
+- Trefferformat: maximal
+- Anzahl: 550
+- Dateiformat: CSV (für MS Excel etc.)
+- Ausgabe als Download
+
+
+## Vorbereitung der Annotation
+
+Grundlage für die Klassifikation als Adjektiv war die Wortartenklassifikation aus Sarahs Proseminar II (in Ediths WS 2016-2017-Version).
+
+Schwierig war die Klassifikation z.B. von Adjektiven, die auch als Gradpartikel gebraucht werden können: *extrem* in *extrem laut*. Auch zu Abgrenzung zu den Adverbien war nicht immer eindeutig: **. 
+
+
+## Annotaionsrichtline
+
+Nach unserer ersten Annotationsrunde (28-12-2018) haben wir festgesetzt, dass wir Kardinalzahlen (unflektierbar) nicht als Adjektive klassifizieren, Ordinalzahlen (attributiv flektierbar) schon. 
+
+
+## Wortartenklassifikation
+
+Besprechung am 04.01.2018
+
+
+Wir führen eine neue Wortartenklasse *skalenmodifizierende Partikel*, draunter fallen:
+  - *Gradpartikel* nach dem Test: alles was substituierbar ist mit *sehr* in *sehr x*, Gradpartikel können nicht allein im Vorfeld stehen
+  - *kurz* in *kurz vor der Halbzeit* (hier wird eine PP modifiziert)
+
+- unsere Klassifikation umfasst: attributive Adjektive (nur vor und nach NN), adverbiale Adjektive (modifizieren Situationen), predikative Adjektive (Subjekt- oder Objekt-NN)
+- in Fällen, in denen das Attribut ein deverbales Adjektiv modifiziert, haben wir es als adverbial klassifiziert, z.B. *gentechnisch* in *gentechnisch modifizierte Mäuse*
+
+
+# Verwendung von *schnell*, *rasch* und *flink*
+
+## Fragestellung - Kurzbeschreibung
+
+Das ist die Folgestudie zu der Studie, in der wir die semantischen Klassen der Nomen, die von *schnell*, *rasch* und *flink* modifiziert werden untersucht haben.
+In dieser Studie untersuchen wir die verschiedenen Verwendungweisen der drei Adjektive, Wir unterscheiden zwischen *attributiv* (ATT), *adverbial* (ADV) und *prädikativ* (PRED).
+
+
+Pro Adjektiv wollen wir 120 Belege. Dafür exportieren wir 150 Hits und nehmen die ersten 120 Belege, die kein Ausschuss sind.
+
+Als Plattform verwenden wir das DWDS und als Korpus das ZEIT-Korpus (1946-2018).
+
+**Fragestellung**: 
+
+- Prosa: Wir suchen nach Adjektiven *schnell*, *rasch* und *flink* (sowohl ADJA als auch ADJD).
+- DWDS-Abfrage: schnell
+- DWDS-Abfrage: rasch
+- DWDS-Abfrage: flink
+
+## Anfrage ans Korpus und Export
+
+Suchmasken-Einstellung:
+
+- Sortierung: zufällig
+- Anzeige: maximal
+- Start und Ende: 1990 bis 2018
+
+Export-Einstellung:
+
+- Trefferformat: maximal
+- Anzahl: 150
+- Dateiformat: CSV (für MS Excel etc.)
+- Ausgabe als Download
+
+```{r}
+adj <- c("schnell", "rasch", "flink")
+
+urls <- glue("https://www.dwds.de/r?q={adj}&corpus=zeit&date-start=1990&date-end=2018&format=max&sort=random&limit=150&view=csv")
+
+destfiles <- glue(paste0(here(), "/Folgestudie/data/{adj}-export_", Sys.Date(), ".csv"))
+
+walk2(urls, destfiles, download.file)
+```
+
+
+```{r}
+# Remove empty lines
+all <- pmap(list(file = destfiles, encoding="UTF-8"), read.csv)
+
+all <- map(all, ~.[complete.cases(.),])
+
+pwalk(list(x = all,
+           file = destfiles,
+           row.names = FALSE), write.csv)
+```
+
+## Wortartenklassifikation
+
+Wie bei der obigen Studie auch schon, habe ich solche Belege, wo eins der Adjektive ein deverbales Adjektiv modifizieren als ADV, und nicht als ATT, klassifiert, z.B. in *flink berlindernd* (Beleg 51).
+
+Ausgeschlossen wurden auch Eigennamen von Verlagen oder Buchtitel, wie *Rasch und Röhrig* und *Fliehe weit und schnell*.
+
+## Potentielle Probleme bei ADJ von *schnell* und *rasch*
+
+Besprechung 06-01-2018
+
+- *schnell* und *rasch* können auch das Eintreten einer Situation beschreiben, z.B. *rasche Hilfe* kann bedeuten, dass das Einsetzen der Hilfe rasch erfolgen soll
+
+- eigentlich müssten wir nachannotieren, ob bei ADJ das Ereignis oder das Eintreten des Ereignisses gemeint ist; oder doch noch etwas anderes wie in *ich muss noch schnell meine Nase putzen, dann ...* 
+
+
+- *schnell*: syntaktische Struktur 
+
+- *schnelles schnelles Meeting* (ein schnell eintretendes, kurzes Meeting)
+
+
+```{r}
+flink_all_url <- 'https://www.dwds.de/r?q=flink+with+%24p%3DADJA&corpus=zeit&date-start=1990&date-end=2018&format=max&sort=random&limit=700&view=tsv'
+
+destfile <- paste0(here(), "/Folgestudie/data/flink_all-export_", Sys.Date(), ".tsv")
+
+flink_all <- fread(flink_all_url, quote="")
+
+write.table(flink_all, destfile, sep = "\t", quote = FALSE, row.names = FALSE)
+
+```
+
+
+

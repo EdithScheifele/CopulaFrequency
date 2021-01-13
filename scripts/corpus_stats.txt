@@ -1,0 +1,15 @@
+Das DWDS-Kernkorpus des 21. Jahrhunderts ist ein zeitlich und nach Textsorten (Belletristik, Gebrauchsliteratur, Wissenschaft, Journalistische Prosa) differenziertes, momentan aber noch nicht ausgewogenes Korpus. Es enthält belletristische und wissenschaftliche Texte aus den Jahren 2000 bis 2006 sowie Zeitungstexte. Das Korpus wird fortlaufend um Texte aller Textsorten ergänzt, sobald wir die Rechte für die Anzeige dieser Texte erhalten.
+
+
+Informationen
+Kategorie: 	Referenzkorpora
+Verfügbarkeit: 	frei recherchierbar
+
+Statistiken
+Dokumente: 	12 184
+Sätze: 	874 113
+Tokens: 	15 469 000
+Aktualisierung der Quelldaten: 	27.07.2017
+Korpusindizierung: 	28.05.2018
+
+https://www.dwds.de/d/korpora/korpus21 (abgerufen am: 13.01.2021, 16:51)
